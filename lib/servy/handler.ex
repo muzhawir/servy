@@ -22,6 +22,10 @@ defmodule Servy.Handler do
     %{conv | path: "/wildthings"}
   end
 
+  def rewrite_path(%{path: "/bears?id=" <> id} = conv) do
+    %{conv | path: "/bears/#{id}"}
+  end
+
   def rewrite_path(conv), do: conv
 
   def log(conv), do: IO.inspect(conv)
@@ -167,3 +171,17 @@ Accept: */*
 response_wildlife = Servy.Handler.handle(request_wildlife)
 
 IO.puts(response_wildlife)
+
+# Bears with URL query
+
+request_bears_with_query = """
+GET /bears?id=100 HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_bears_with_query = Servy.Handler.handle(request_bears_with_query)
+
+IO.puts(response_bears_with_query)
