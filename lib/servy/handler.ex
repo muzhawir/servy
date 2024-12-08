@@ -2,9 +2,12 @@ defmodule Servy.Handler do
   @moduledoc """
   Handles HTTP requests.
   """
-  require Logger
 
-  @pages_path Path.expand("../../pages", __DIR__)
+  import Servy.FileHandler, only: :functions
+  import Servy.Parser, only: [parse: 1]
+  import Servy.Plugins, only: [rewrite_path: 1, log: 1, emojify: 1, track: 1]
+
+  @pages_path Path.expand("pages", File.cwd!())
 
   @doc """
   Transforms a request into a response.
@@ -19,37 +22,6 @@ defmodule Servy.Handler do
     |> track()
     |> format_response()
   end
-
-  @doc """
-  Parses a request into a map.
-  """
-  def parse(request) do
-    [method, path, _] =
-      request
-      |> String.split("\n")
-      |> List.first()
-      |> String.split(" ")
-
-    %{method: method, path: path, resp_body: "", status: nil}
-  end
-
-  @doc """
-  Rewrites the path based on the request path.
-  """
-  def rewrite_path(%{path: "/wildlife"} = conv) do
-    %{conv | path: "/wildthings"}
-  end
-
-  def rewrite_path(%{path: "/bears?id=" <> id} = conv) do
-    %{conv | path: "/bears/#{id}"}
-  end
-
-  def rewrite_path(conv), do: conv
-
-  @doc """
-  Logs and inspects the request.
-  """
-  def log(conv), do: IO.inspect(conv)
 
   @doc """
   Routes a request.
@@ -89,29 +61,6 @@ defmodule Servy.Handler do
   end
 
   @doc """
-  Injects emoji into the response body.
-  """
-  def emojify(%{status: 200} = conv) do
-    emojis = String.duplicate("🎉", 2)
-
-    body = "#{emojis}\n#{conv.resp_body}\n#{emojis}"
-
-    %{conv | resp_body: body}
-  end
-
-  def emojify(conv), do: conv
-
-  @doc """
-  Tracks the request based on the status.
-  """
-  def track(%{status: 404, path: path} = conv) do
-    Logger.warning("Warning #{path} is on the loose!")
-    conv
-  end
-
-  def track(conv), do: conv
-
-  @doc """
   Formats the response.
   """
   def format_response(conv) do
@@ -135,18 +84,6 @@ defmodule Servy.Handler do
     }
 
     http_response_codes[code]
-  end
-
-  defp handle_file({:ok, content}, conv) do
-    %{conv | status: 200, resp_body: content}
-  end
-
-  defp handle_file({:error, :enoent}, conv) do
-    %{conv | status: 404, resp_body: "File Not Found"}
-  end
-
-  defp handle_file({:error, reason}, conv) do
-    %{conv | status: 500, resp_body: "File Error: #{reason}"}
   end
 end
 
