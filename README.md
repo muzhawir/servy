@@ -1,21 +1,38 @@
-# Servy
+# Servy - Training Project from Pragmatic Studio
 
-**TODO: Add description**
+![Cover](course_cover.png)
 
-## Installation
+This is a training project from the [Developing with Elixir/OTP Course by Pragmatic Studio](https://pragmaticstudio.com/courses/elixir).
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `servy` to your list of dependencies in `mix.exs`:
+The learning modules consist of:
 
-```elixir
-def deps do
-  [
-    {:servy, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/servy>.
-
+- [x] Introduction
+- [x] Create Mix Project
+- [x] High-Level Transformations
+- [x] Pattern Matching
+- [x] Immutable Data
+- [x] Function Clauses
+- [x] Advanced Pattern Matching
+- [x] Pattern Matching Maps
+- [x] Serving Files
+- [ ] Module Attributes
+- [ ] Organizing Code
+- [ ] Modeling with Structs
+- [ ] Matching Heads and Tails
+- [ ] Recursion
+- [ ] Slicing and Dicing with Enum
+- [ ] Comprehensions
+- [ ] A Peek at Phoenix
+- [ ] Test Automation
+- [ ] Rendering JSON
+- [ ] Web Server Sockets
+- [ ] Concurrent, Isolated Processes
+- [ ] Sending and Receiving Messages
+- [ ] Asynchronous Tasks
+- [ ] Stateful Server Processes
+- [ ] Refactoring Toward GenServer
+- [ ] OTP GenServer
+- [ ] Another GenServer
+- [ ] Linking Processes
+- [ ] Fault Recovery with OTP Supervisors
+- [ ] Final OTP Application
