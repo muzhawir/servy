@@ -29,8 +29,8 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Advanced Pattern Matching
 - [x] Pattern Matching Maps
 - [x] Serving Files
-- [ ] Module Attributes
-- [ ] Organizing Code
+- [x] Module Attributes
+- [x] Organizing Code
 - [ ] Modeling with Structs
 - [ ] Matching Heads and Tails
 - [ ] Recursion

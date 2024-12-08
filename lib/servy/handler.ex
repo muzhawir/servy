@@ -1,8 +1,17 @@
 defmodule Servy.Handler do
-  @moduledoc false
+  @moduledoc """
+  Handles HTTP requests.
+  """
 
-  require Logger
+  import Servy.FileHandler, only: :functions
+  import Servy.Parser, only: [parse: 1]
+  import Servy.Plugins, only: [rewrite_path: 1, log: 1, emojify: 1, track: 1]
 
+  @pages_path Path.expand("pages", File.cwd!())
+
+  @doc """
+  Transforms a request into a response.
+  """
   def handle(request) do
     request
     |> parse()
@@ -14,49 +23,9 @@ defmodule Servy.Handler do
     |> format_response()
   end
 
-  def emojify(%{status: 200} = conv) do
-    emojis = String.duplicate("🎉", 2)
-
-    body = "#{emojis}\n#{conv.resp_body}\n#{emojis}"
-
-    %{conv | resp_body: body}
-  end
-
-  def emojify(conv), do: conv
-
-  def track(%{status: 404, path: path} = conv) do
-    Logger.warning("Warning #{path} is on the loose!")
-    conv
-  end
-
-  def track(conv), do: conv
-
-  def rewrite_path(%{path: "/wildlife"} = conv) do
-    %{conv | path: "/wildthings"}
-  end
-
-  def rewrite_path(%{path: "/bears?id=" <> id} = conv) do
-    %{conv | path: "/bears/#{id}"}
-  end
-
-  def rewrite_path(conv), do: conv
-
-  def log(conv), do: IO.inspect(conv)
-
-  def parse(request) do
-    [method, path, _] =
-      request
-      |> String.split("\n")
-      |> List.first()
-      |> String.split(" ")
-
-    %{method: method, path: path, resp_body: "", status: nil}
-  end
-
-  # def route(conv) do
-  #   route(conv, conv.method, conv.path)
-  # end
-
+  @doc """
+  Routes a request.
+  """
   def route(%{method: "GET", path: "/wildthings"} = conv) do
     %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
   end
@@ -73,18 +42,16 @@ defmodule Servy.Handler do
     %{conv | status: 403, resp_body: "Deleting bear is forbidden"}
   end
 
-  def route(%{method: "GET", path: "/pages/" <> file} = conv) do
-    "../../pages"
-    |> Path.expand(__DIR__)
-    |> Path.join(file <> ".html")
+  def route(%{method: "GET", path: "/about"} = conv) do
+    @pages_path
+    |> Path.join("about.html")
     |> File.read()
     |> handle_file(conv)
   end
 
-  def route(%{method: "GET", path: "/about"} = conv) do
-    "../../pages"
-    |> Path.expand(__DIR__)
-    |> Path.join("about.html")
+  def route(%{method: "GET", path: "/pages/" <> file} = conv) do
+    @pages_path
+    |> Path.join(file <> ".html")
     |> File.read()
     |> handle_file(conv)
   end
@@ -93,6 +60,9 @@ defmodule Servy.Handler do
     %{conv | status: 404, resp_body: "No Path #{path} here!"}
   end
 
+  @doc """
+  Formats the response.
+  """
   def format_response(conv) do
     """
     HTTP/1.1 #{conv.status} #{status_reason(conv.status)}
@@ -114,18 +84,6 @@ defmodule Servy.Handler do
     }
 
     http_response_codes[code]
-  end
-
-  defp handle_file({:ok, content}, conv) do
-    %{conv | status: 200, resp_body: content}
-  end
-
-  defp handle_file({:error, :enoent}, conv) do
-    %{conv | status: 404, resp_body: "File Not Found"}
-  end
-
-  defp handle_file({:error, reason}, conv) do
-    %{conv | status: 500, resp_body: "File Error: #{reason}"}
   end
 end
 
@@ -244,7 +202,7 @@ IO.puts(response_about)
 # Bears New
 
 request_bears_new = """
-POST /bears/new HTTP/1.1
+GET /pages/form HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
