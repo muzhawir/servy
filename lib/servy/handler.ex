@@ -15,7 +15,7 @@ defmodule Servy.Handler do
   end
 
   def emojify(%{status: 200} = conv) do
-    emojis = String.duplicate("🎉", 5)
+    emojis = String.duplicate("🎉", 2)
 
     body = "#{emojis}\n#{conv.resp_body}\n#{emojis}"
 
@@ -73,6 +73,22 @@ defmodule Servy.Handler do
     %{conv | status: 403, resp_body: "Deleting bear is forbidden"}
   end
 
+  def route(%{method: "GET", path: "/pages/" <> file} = conv) do
+    "../../pages"
+    |> Path.expand(__DIR__)
+    |> Path.join(file <> ".html")
+    |> File.read()
+    |> handle_file(conv)
+  end
+
+  def route(%{method: "GET", path: "/about"} = conv) do
+    "../../pages"
+    |> Path.expand(__DIR__)
+    |> Path.join("about.html")
+    |> File.read()
+    |> handle_file(conv)
+  end
+
   def route(%{path: path} = conv) do
     %{conv | status: 404, resp_body: "No Path #{path} here!"}
   end
@@ -98,6 +114,18 @@ defmodule Servy.Handler do
     }
 
     http_response_codes[code]
+  end
+
+  defp handle_file({:ok, content}, conv) do
+    %{conv | status: 200, resp_body: content}
+  end
+
+  defp handle_file({:error, :enoent}, conv) do
+    %{conv | status: 404, resp_body: "File Not Found"}
+  end
+
+  defp handle_file({:error, reason}, conv) do
+    %{conv | status: 500, resp_body: "File Error: #{reason}"}
   end
 end
 
@@ -198,3 +226,59 @@ Accept: */*
 response_bears_with_query = Servy.Handler.handle(request_bears_with_query)
 
 IO.puts(response_bears_with_query)
+
+# About Us
+
+request_about = """
+GET /about HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_about = Servy.Handler.handle(request_about)
+
+IO.puts(response_about)
+
+# Bears New
+
+request_bears_new = """
+POST /bears/new HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_bears_new = Servy.Handler.handle(request_bears_new)
+
+IO.puts(response_bears_new)
+
+# Contact Us
+
+request_contact = """
+GET /pages/contact HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_contact = Servy.Handler.handle(request_contact)
+
+IO.puts(response_contact)
+
+# FAQ
+
+request_faq = """
+GET /pages/faq HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_faq = Servy.Handler.handle(request_faq)
+
+IO.puts(response_faq)
