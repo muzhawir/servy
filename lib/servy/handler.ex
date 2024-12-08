@@ -1,13 +1,45 @@
 defmodule Servy.Handler do
   @moduledoc false
 
+  require Logger
+
   def handle(request) do
     request
     |> parse()
+    |> rewrite_path()
     |> log()
     |> route()
+    |> emojify()
+    |> track()
     |> format_response()
   end
+
+  def emojify(%{status: 200} = conv) do
+    emojis = String.duplicate("🎉", 5)
+
+    body = "#{emojis}\n#{conv.resp_body}\n#{emojis}"
+
+    %{conv | resp_body: body}
+  end
+
+  def emojify(conv), do: conv
+
+  def track(%{status: 404, path: path} = conv) do
+    Logger.warning("Warning #{path} is on the loose!")
+    conv
+  end
+
+  def track(conv), do: conv
+
+  def rewrite_path(%{path: "/wildlife"} = conv) do
+    %{conv | path: "/wildthings"}
+  end
+
+  def rewrite_path(%{path: "/bears?id=" <> id} = conv) do
+    %{conv | path: "/bears/#{id}"}
+  end
+
+  def rewrite_path(conv), do: conv
 
   def log(conv), do: IO.inspect(conv)
 
@@ -21,28 +53,28 @@ defmodule Servy.Handler do
     %{method: method, path: path, resp_body: "", status: nil}
   end
 
-  def route(conv) do
-    route(conv, conv.method, conv.path)
-  end
+  # def route(conv) do
+  #   route(conv, conv.method, conv.path)
+  # end
 
-  def route(conv, "GET", "/wildthings") do
+  def route(%{method: "GET", path: "/wildthings"} = conv) do
     %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
   end
 
-  def route(conv, "GET", "/bears") do
+  def route(%{method: "GET", path: "/bears"} = conv) do
     %{conv | status: 200, resp_body: "Teddy, Smoky, Paddington"}
   end
 
-  def route(conv, "GET", "/bears/" <> id) do
+  def route(%{method: "GET", path: "/bears/" <> id} = conv) do
     %{conv | status: 200, resp_body: "Bear #{id}"}
   end
 
-  def route(conv, "DELETE", "/bears/" <> _id) do
+  def route(%{method: "DELETE", path: "/bears/" <> _id} = conv) do
     %{conv | status: 403, resp_body: "Deleting bear is forbidden"}
   end
 
-  def route(conv, _method, path) do
-    %{conv | status: 404, resp_body: "No Path #{path} here"}
+  def route(%{path: path} = conv) do
+    %{conv | status: 404, resp_body: "No Path #{path} here!"}
   end
 
   def format_response(conv) do
@@ -138,3 +170,31 @@ Accept: */*
 response_delete = Servy.Handler.handle(request_delete)
 
 IO.puts(response_delete)
+
+# Wildlife
+
+request_wildlife = """
+GET /wildlife HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_wildlife = Servy.Handler.handle(request_wildlife)
+
+IO.puts(response_wildlife)
+
+# Bears with URL query
+
+request_bears_with_query = """
+GET /bears?id=100 HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_bears_with_query = Servy.Handler.handle(request_bears_with_query)
+
+IO.puts(response_bears_with_query)
