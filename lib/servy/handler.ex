@@ -73,6 +73,14 @@ defmodule Servy.Handler do
     %{conv | status: 403, resp_body: "Deleting bear is forbidden"}
   end
 
+  def route(%{method: "GET", path: "/pages/" <> file} = conv) do
+    "../../pages"
+    |> Path.expand(__DIR__)
+    |> Path.join(file <> ".html")
+    |> File.read()
+    |> handle_file(conv)
+  end
+
   def route(%{method: "GET", path: "/about"} = conv) do
     "../../pages"
     |> Path.expand(__DIR__)
@@ -232,3 +240,45 @@ Accept: */*
 response_about = Servy.Handler.handle(request_about)
 
 IO.puts(response_about)
+
+# Bears New
+
+request_bears_new = """
+POST /bears/new HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_bears_new = Servy.Handler.handle(request_bears_new)
+
+IO.puts(response_bears_new)
+
+# Contact Us
+
+request_contact = """
+GET /pages/contact HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_contact = Servy.Handler.handle(request_contact)
+
+IO.puts(response_contact)
+
+# FAQ
+
+request_faq = """
+GET /pages/faq HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+
+response_faq = Servy.Handler.handle(request_faq)
+
+IO.puts(response_faq)
