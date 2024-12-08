@@ -7,9 +7,20 @@ defmodule Servy.Handler do
     |> rewrite_path()
     |> log()
     |> route()
+    |> emojify()
     |> track()
     |> format_response()
   end
+
+  def emojify(%{status: 200} = conv) do
+    emojis = String.duplicate("🎉", 5)
+
+    body = "#{emojis}\n#{conv.resp_body}\n#{emojis}"
+
+    %{conv | resp_body: body}
+  end
+
+  def emojify(conv), do: conv
 
   def track(%{status: 404, path: path} = conv) do
     IO.puts("Warning #{path} is on the loose!")
