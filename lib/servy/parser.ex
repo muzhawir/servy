@@ -3,6 +3,8 @@ defmodule Servy.Parser do
   Handles HTTP parsing.
   """
 
+  alias Servy.Conv
+
   @doc """
   Parses a request into a map.
   """
@@ -13,6 +15,6 @@ defmodule Servy.Parser do
       |> List.first()
       |> String.split(" ")
 
-    %{method: method, path: path, resp_body: "", status: nil}
+    %Conv{method: method, path: path}
   end
 end
