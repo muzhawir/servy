@@ -4,6 +4,7 @@ defmodule Servy.Conv do
   defstruct method: "GET",
             path: "",
             params: %{},
+            headers: %{},
             resp_body: "",
             status: nil
 

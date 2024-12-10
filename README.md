@@ -33,7 +33,7 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Organizing Code
 - [x] Modeling with Structs
 - [x] Matching Heads and Tails
-- [ ] Recursion
+- [x] Recursion
 - [ ] Slicing and Dicing with Enum
 - [ ] Comprehensions
 - [ ] A Peek at Phoenix
