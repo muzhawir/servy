@@ -31,7 +31,7 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Serving Files
 - [x] Module Attributes
 - [x] Organizing Code
-- [ ] Modeling with Structs
+- [x] Modeling with Structs
 - [ ] Matching Heads and Tails
 - [ ] Recursion
 - [ ] Slicing and Dicing with Enum
