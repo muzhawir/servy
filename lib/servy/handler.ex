@@ -29,19 +29,19 @@ defmodule Servy.Handler do
   Routes a request.
   """
   def route(%Conv{method: "GET", path: "/wildthings"} = conv) do
-    %{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
+    %Conv{conv | status: 200, resp_body: "Bears, Lions, Tigers"}
   end
 
   def route(%Conv{method: "GET", path: "/bears"} = conv) do
-    %{conv | status: 200, resp_body: "Teddy, Smoky, Paddington"}
+    %Conv{conv | status: 200, resp_body: "Teddy, Smoky, Paddington"}
   end
 
   def route(%Conv{method: "GET", path: "/bears/" <> id} = conv) do
-    %{conv | status: 200, resp_body: "Bear #{id}"}
+    %Conv{conv | status: 200, resp_body: "Bear #{id}"}
   end
 
   def route(%Conv{method: "DELETE", path: "/bears/" <> _id} = conv) do
-    %{conv | status: 403, resp_body: "Deleting bear is forbidden"}
+    %Conv{conv | status: 403, resp_body: "Deleting bear is forbidden"}
   end
 
   def route(%Conv{method: "GET", path: "/about"} = conv) do
@@ -59,7 +59,7 @@ defmodule Servy.Handler do
   end
 
   def route(%Conv{path: path} = conv) do
-    %{conv | status: 404, resp_body: "No Path #{path} here!"}
+    %Conv{conv | status: 404, resp_body: "No Path #{path} here!"}
   end
 
   @doc """
