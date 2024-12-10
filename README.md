@@ -32,7 +32,7 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Module Attributes
 - [x] Organizing Code
 - [x] Modeling with Structs
-- [ ] Matching Heads and Tails
+- [x] Matching Heads and Tails
 - [ ] Recursion
 - [ ] Slicing and Dicing with Enum
 - [ ] Comprehensions

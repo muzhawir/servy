@@ -40,6 +40,16 @@ defmodule Servy.Handler do
     %Conv{conv | status: 200, resp_body: "Bear #{id}"}
   end
 
+  def route(%Conv{method: "POST", path: "/bears"} = conv) do
+    params = %{"name" => "Bree", "type" => "Brown"}
+
+    %Conv{
+      conv
+      | status: 201,
+        resp_body: "Created a #{params["type"]} bear named #{params["name"]} bear!"
+    }
+  end
+
   def route(%Conv{method: "DELETE", path: "/bears/" <> _id} = conv) do
     %Conv{conv | status: 403, resp_body: "Deleting bear is forbidden"}
   end
@@ -78,7 +88,7 @@ end
 
 # Wildthings
 
-request = """
+wildthings_request = """
 GET /wildthings HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
@@ -86,9 +96,7 @@ Accept: */*
 
 """
 
-response = Servy.Handler.handle(request)
-
-IO.puts(response)
+wildthings_request |> Servy.Handler.handle() |> IO.puts()
 
 # Bears
 
@@ -100,9 +108,7 @@ Accept: */*
 
 """
 
-response_bears = Servy.Handler.handle(request_bears)
-
-IO.puts(response_bears)
+request_bears |> Servy.Handler.handle() |> IO.puts()
 
 # Bears 1
 
@@ -114,9 +120,7 @@ Accept: */*
 
 """
 
-response_bears_1 = Servy.Handler.handle(request_bears_1)
-
-IO.puts(response_bears_1)
+request_bears_1 |> Servy.Handler.handle() |> IO.puts()
 
 # Bigfoot
 
@@ -128,9 +132,7 @@ Accept: */*
 
 """
 
-response_bigfoot = Servy.Handler.handle(request_bigfoot)
-
-IO.puts(response_bigfoot)
+request_bigfoot |> Servy.Handler.handle() |> IO.puts()
 
 # Excercise DELETE METHOD
 
@@ -142,9 +144,7 @@ Accept: */*
 
 """
 
-response_delete = Servy.Handler.handle(request_delete)
-
-IO.puts(response_delete)
+request_delete |> Servy.Handler.handle() |> IO.puts()
 
 # Wildlife
 
@@ -156,9 +156,7 @@ Accept: */*
 
 """
 
-response_wildlife = Servy.Handler.handle(request_wildlife)
-
-IO.puts(response_wildlife)
+request_wildlife |> Servy.Handler.handle() |> IO.puts()
 
 # Bears with URL query
 
@@ -170,9 +168,7 @@ Accept: */*
 
 """
 
-response_bears_with_query = Servy.Handler.handle(request_bears_with_query)
-
-IO.puts(response_bears_with_query)
+request_bears_with_query |> Servy.Handler.handle() |> IO.puts()
 
 # About Us
 
@@ -184,9 +180,7 @@ Accept: */*
 
 """
 
-response_about = Servy.Handler.handle(request_about)
-
-IO.puts(response_about)
+request_about |> Servy.Handler.handle() |> IO.puts()
 
 # Bears New
 
@@ -198,9 +192,7 @@ Accept: */*
 
 """
 
-response_bears_new = Servy.Handler.handle(request_bears_new)
-
-IO.puts(response_bears_new)
+request_bears_new |> Servy.Handler.handle() |> IO.puts()
 
 # Contact Us
 
@@ -212,9 +204,7 @@ Accept: */*
 
 """
 
-response_contact = Servy.Handler.handle(request_contact)
-
-IO.puts(response_contact)
+request_contact |> Servy.Handler.handle() |> IO.puts()
 
 # FAQ
 
@@ -226,6 +216,19 @@ Accept: */*
 
 """
 
-response_faq = Servy.Handler.handle(request_faq)
+request_faq |> Servy.Handler.handle() |> IO.puts()
 
-IO.puts(response_faq)
+# Post request
+
+request_post = """
+POST /bears HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 21
+
+name=Baloo&type=Brown
+"""
+
+request_post |> Servy.Handler.handle() |> IO.puts()
