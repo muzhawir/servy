@@ -10,11 +10,11 @@ defmodule Servy.Plugins do
   Rewrites the path based on the request path.
   """
   def rewrite_path(%Conv{path: "/wildlife"} = conv) do
-    %{conv | path: "/wildthings"}
+    %Conv{conv | path: "/wildthings"}
   end
 
   def rewrite_path(%Conv{path: "/bears?id=" <> id} = conv) do
-    %{conv | path: "/bears/#{id}"}
+    %Conv{conv | path: "/bears/#{id}"}
   end
 
   def rewrite_path(%Conv{} = conv), do: conv
