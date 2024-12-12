@@ -34,7 +34,7 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Modeling with Structs
 - [x] Matching Heads and Tails
 - [x] Recursion
-- [ ] Slicing and Dicing with Enum
+- [x] Slicing and Dicing with Enum
 - [ ] Comprehensions
 - [ ] A Peek at Phoenix
 - [ ] Test Automation
