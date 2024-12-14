@@ -36,20 +36,8 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Recursion
 - [x] Slicing and Dicing with Enum
 - [x] Comprehensions
-- [ ] A Peek at Phoenix
-- [ ] Test Automation
-- [ ] Rendering JSON
-- [ ] Web Server Sockets
-- [ ] Concurrent, Isolated Processes
-- [ ] Sending and Receiving Messages
-- [ ] Asynchronous Tasks
-- [ ] Stateful Server Processes
-- [ ] Refactoring Toward GenServer
-- [ ] OTP GenServer
-- [ ] Another GenServer
-- [ ] Linking Processes
-- [ ] Fault Recovery with OTP Supervisors
-- [ ] Final OTP Application
+
+The later parts of the course focus on building a web application using the Phoenix Framework. This project, called **Refuge**, is available in a separate repository: [Refuge Project](https://github.com/muzhawir/refuge).
 
 ## How to Run
 
