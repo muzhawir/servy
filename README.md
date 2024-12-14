@@ -35,7 +35,7 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Matching Heads and Tails
 - [x] Recursion
 - [x] Slicing and Dicing with Enum
-- [ ] Comprehensions
+- [x] Comprehensions
 - [ ] A Peek at Phoenix
 - [ ] Test Automation
 - [ ] Rendering JSON
