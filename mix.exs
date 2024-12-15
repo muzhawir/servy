@@ -22,7 +22,8 @@ defmodule Servy.MixProject do
   defp deps do
     [
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:styler, "~> 1.2", only: [:dev, :test], runtime: false}
+      {:styler, "~> 1.2", only: [:dev, :test], runtime: false},
+      {:jason, "~> 1.4"}
     ]
   end
 end

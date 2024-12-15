@@ -22,7 +22,13 @@ defmodule Servy.Plugins do
   @doc """
   Logs and inspects the request.
   """
-  def log(%Conv{} = conv), do: IO.inspect(conv)
+  def log(%Conv{} = conv) do
+    if Mix.env() == :dev do
+      IO.inspect(conv)
+    end
+
+    conv
+  end
 
   @doc """
   Injects emoji into the response body.
@@ -41,7 +47,10 @@ defmodule Servy.Plugins do
   Tracks the request based on the status.
   """
   def track(%Conv{status: 404, path: path} = conv) do
-    Logger.warning("Warning #{path} is on the loose!")
+    if Mix.env() != :test do
+      Logger.warning("Warning #{path} is on the loose!")
+    end
+
     conv
   end
 
