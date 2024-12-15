@@ -55,4 +55,10 @@ defmodule Servy.Plugins do
   end
 
   def track(%Conv{} = conv), do: conv
+
+  def put_content_length(conv) do
+    content_length_header = Map.put(conv.resp_headers, "Content-Length", String.length(conv.resp_body))
+
+    %Conv{conv | resp_headers: content_length_header}
+  end
 end
