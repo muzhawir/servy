@@ -23,7 +23,8 @@ defmodule Servy.MixProject do
     [
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:styler, "~> 1.2", only: [:dev, :test], runtime: false},
-      {:poison, "~> 6.0"}
+      {:poison, "~> 6.0"},
+      {:earmark, "~> 1.4"}
     ]
   end
 end

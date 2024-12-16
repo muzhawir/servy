@@ -254,6 +254,32 @@ defmodule HandlerTest do
     assert response == expected_response
   end
 
+  test "GET /pages/md/faq" do
+    request = """
+    GET /pages/md/faq HTTP/1.1\r
+    Host: example.com\r
+    User-Agent: ExampleBrowser/1.0\r
+    Accept: */*\r
+    \r
+    """
+
+    response = handle(request)
+
+    expected_response = """
+    HTTP/1.1 200 OK\r
+    Content-Type: text/html\r
+    Content-Length: 57\r
+    \r
+    <h1>
+    Frequently Asked Questions</h1>
+    <p>
+    lorem ipsum</p>
+
+    """
+
+    assert response == expected_response
+  end
+
   defp remove_whitespace(text) do
     String.replace(text, ~r{\s}, "")
   end

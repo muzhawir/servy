@@ -73,16 +73,30 @@ defmodule Servy.Handler do
     |> handle_file(conv)
   end
 
-  def route(%Conv{method: "GET", path: "/pages/" <> file} = conv) do
+  def route(%Conv{method: "GET", path: "/pages/html/" <> file} = conv) do
     @pages_path
-    |> Path.join(file <> ".html")
+    |> Path.join("#{file}.html")
     |> File.read()
     |> handle_file(conv)
+  end
+
+  def route(%Conv{method: "GET", path: "/pages/md/" <> file} = conv) do
+    @pages_path
+    |> Path.join("#{file}.md")
+    |> File.read()
+    |> handle_file(conv)
+    |> markdown_to_html()
   end
 
   def route(%Conv{path: path} = conv) do
     %Conv{conv | status: 404, resp_body: "No Path #{path} here!"}
   end
+
+  def markdown_to_html(%Conv{status: 200} = conv) do
+    %Conv{conv | resp_body: Earmark.as_html!(conv.resp_body)}
+  end
+
+  def markdown_to_html(%Conv{} = conv), do: conv
 
   @doc """
   Formats the response.
