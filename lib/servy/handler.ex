@@ -58,6 +58,10 @@ defmodule Servy.Handler do
     }
   end
 
+  def route(%Conv{method: "POST", path: "/api/bears"} = conv) do
+    ApiBearController.create(conv, conv.params)
+  end
+
   def route(%Conv{method: "DELETE", path: "/bears/" <> _id} = conv) do
     BearController.delete(conv)
   end
