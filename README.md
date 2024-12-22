@@ -37,6 +37,8 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Slicing and Dicing with Enum
 - [x] Comprehensions
 - [x] Test Automations
+- [x] Rendering JSON
+- [x] Web Server Socket
 
 The later parts of the course focus on building a web application using the Phoenix Framework. This project, called **Refuge**, is available in a separate repository: [Refuge Project](https://github.com/muzhawir/refuge).
 
