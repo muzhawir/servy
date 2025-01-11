@@ -1,19 +1,21 @@
 # Servy
 
-This repository contains the **Servy Project** from the **Developing with Elixir/OTP** course by [Pragmatic Studio](https://pragmaticstudio.com), which is a comprehensive guide to explore Elixir fundamentals and OTP concepts through a project-based approach.
-
-If you are interested in learning Elixir, check out the [course here](https://pragmaticstudio.com/courses/elixir). It's worth every penny! Plus, they offer a **Purchasing Power Parity Discount** based on your location to make it more affordable.
+This repository contains the **Servy Project**, a simple HTTP request handler built with Elixir.
+It serves as a practical example to explore Elixir fundamentals and OTP concepts.
 
 ## Disclaimer
 
-This repository is based on the Developing with Elixir/OTP Course by Pragmatic Studio, with significant modifications and customizations made as part of my personal learning journey. It is intended solely for educational purposes and to document my exploration of Elixir concepts.
+This repository is based on the Developing with Elixir/OTP Course by Pragmatic Studio,
+with significant modifications and customizations made as part of my personal learning journey.
+It is intended solely for educational purposes and to document my exploration of Elixir concepts.
 
 ## License
 
 This project is subject to the following terms:
 
 - The code and associated documentation are for personal educational purposes only.
-- You are not permitted to use this software to create training materials, courses, books, articles, or similar works.
+- You are not permitted to use this software to create training materials, courses, books,
+articles, or similar works.
 - The software may not be sold, distributed, or published in any form.
 
 For any questions regarding usage rights, please contact Pragmatic Studio.
@@ -36,9 +38,15 @@ For any questions regarding usage rights, please contact Pragmatic Studio.
 - [x] Recursion
 - [x] Slicing and Dicing with Enum
 - [x] Comprehensions
+- [x] A Peek At Phoenix
 - [x] Test Automations
+- [x] Rendering JSON
+- [x] Web Server Socket
+- [ ] Concurrent, Isolated Processes
 
-The later parts of the course focus on building a web application using the Phoenix Framework. This project, called **Refuge**, is available in a separate repository: [Refuge Project](https://github.com/muzhawir/refuge).
+The later parts of the course focus on building a web application using the Phoenix Framework.
+This project, called **Refuge**, is available in a separate
+repository: [Refuge Project](https://github.com/muzhawir/refuge).
 
 ## How to Run
 
