@@ -1,5 +1,6 @@
 defmodule Servy.HttpServer do
   @moduledoc false
+
   @doc """
   Starts the server on the given `port` of localhost.
   """
@@ -61,19 +62,6 @@ defmodule Servy.HttpServer do
     IO.puts(request)
 
     request
-  end
-
-  @doc """
-  Returns a generic HTTP response.
-  """
-  def generate_response(_request) do
-    """
-    HTTP/1.1 200 OK\r
-    Content-Type: text/plain\r
-    Content-Length: 6\r
-    \r
-    Hello!
-    """
   end
 
   @doc """
